@@ -1,51 +1,52 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
-import requests from "../Requests";
+import Movie from "./Movie";
+import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 
 const BASE_PATH = "https://image.tmdb.org/t/p/w500/";
 
-const Row = ({ title, fetchURL }) => {
+const Row = ({ title, fetchURL, rowID }) => {
   const [movies, setMovies] = useState([]);
-  const [like, setLike] = useState(false);
 
   useEffect(() => {
-    axios.get(requests.requestPopular).then((response) => {
+    axios.get(fetchURL).then((response) => {
       setMovies(response.data.results);
     });
   }, [fetchURL]);
+
+  const slideLeft = () => {
+    let slider = document.getElementById("slider" + rowID);
+    slider.scrollLeft = slider.scrollLeft - 500;
+  };
+
+  const slideRight = () => {
+    let slider = document.getElementById("slider" + rowID);
+    slider.scrollLeft = slider.scrollLeft + 500;
+  };
 
   return (
     <>
       <h2 className="font-bold p-4 md:text-xl">{title}</h2>
 
-      <div className="relative flex items-center">
-        <div id={"slider"}>
+      <div className="relative flex items-center group">
+        <MdChevronLeft
+          onClick={slideLeft}
+          size={40}
+          className="bg-white rounded-full absolute cursor-pointer z-10 opacity-50 hover:opacity-100 text-black hidden group-hover:block left-0"
+        />
+        <div
+          id={"slider" + rowID}
+          className="w-full h-full overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide relative"
+        >
           {movies.map((movie) => (
-            <div
-              key={movie?.id}
-              className="w-[160px] sm:w-[200px] md:w-[240px] lg:w-[280px] inline-block cursor-pointer relative p-2"
-            >
-              <img
-                className="w-full h-full block"
-                src={`${BASE_PATH}${movie?.poster_path}`}
-                alt={movie?.name}
-              />
-              <div className="absolute top-0 left-0 w-full h-full opacity-0 hover:bg-black/80 hover:opacity-100 ">
-                <p className="white-space-normal text-sm md:text-lg font-bold flex justify-center items-center h-full text-center">
-                  {movie?.title}
-                </p>
-                <p>
-                  {like ? (
-                    <FaHeart className="absolute top-4 left-4 text-gray-300" />
-                  ) : (
-                    <FaRegHeart className="absolute top-4 left-4 text-gray-300" />
-                  )}
-                </p>
-              </div>
-            </div>
+            <Movie key={movie?.id} movie={movie} basePath={BASE_PATH} />
           ))}
         </div>
+        <MdChevronRight
+          onClick={slideRight}
+          size={40}
+          className="bg-white rounded-full absolute cursor-pointer z-10 opacity-50 hover:opacity-100 text-black hidden group-hover:block right-0"
+        />
       </div>
     </>
   );
