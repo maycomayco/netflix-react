@@ -26,7 +26,7 @@ const Signup = () => {
           src="https://assets.nflxext.com/ffe/siteui/vlv3/45082c39-e6d5-4b02-8867-e38fe32ed3af/3e35f791-04e3-4db3-b963-f69e0e1d6af6/AR-es-20220919-popsignuptwoweeks-perspective_alpha_website_small.jpg"
         />
         <div className="bg-black/60 fixed top-0 left-0 w-full h-screen"></div>
-        <div className="fixed w-full px-6 py-24 z-50">
+        <div className="fixed w-full px-6 py-24 z-40">
           <div className="max-w-[450px] h-[600px] mx-auto bg-black/75">
             <div className="max-w-[320px] mx-auto py-16">
               <h1 className="text-3xl font-bold">Sign Up</h1>
