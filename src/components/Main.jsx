@@ -14,10 +14,6 @@ const Main = () => {
     axios.get(requests.requestPopular).then((response) => {
       setMovies(response.data.results);
     });
-
-    // return () => {
-    // 	second
-    // }
   }, []);
 
   const truncateString = (str = "", num) => {

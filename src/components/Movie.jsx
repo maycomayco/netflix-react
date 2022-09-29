@@ -8,14 +8,12 @@ const Movie = ({ movie, basePath }) => {
   const [like, setLike] = useState(false);
   const [saved, setSaved] = useState(false);
   const { user } = UserAuth();
-  const movieRef = doc(db, "users", `${user?.email}`);
-  console.log(movieRef);
 
   const handleLike = async () => {
     if (user?.email) {
       setLike((prev) => !prev);
       setSaved(true);
-      await updateDoc(movieRef, {
+      await updateDoc(doc(db, "users", `${user?.email}`), {
         savedMovies: arrayUnion({
           id: movie.id,
           title: movie.title,
