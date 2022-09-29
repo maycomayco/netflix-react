@@ -3,17 +3,16 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { UserAuth } from "../context/AuthContext";
 import { db } from "../firebase";
 import { arrayUnion, doc, updateDoc } from "firebase/firestore";
+import { BASE_URL, PATH_USERS, POSTER_SIZE } from "../constants";
 
-const Movie = ({ movie, basePath }) => {
+const Movie = ({ movie }) => {
   const [like, setLike] = useState(false);
-  const [saved, setSaved] = useState(false);
   const { user } = UserAuth();
 
   const handleLike = async () => {
     if (user?.email) {
       setLike((prev) => !prev);
-      setSaved(true);
-      await updateDoc(doc(db, "users", `${user?.email}`), {
+      await updateDoc(doc(db, PATH_USERS, `${user?.email}`), {
         savedMovies: arrayUnion({
           id: movie.id,
           title: movie.title,
@@ -29,7 +28,7 @@ const Movie = ({ movie, basePath }) => {
     <div className="w-[160px] sm:w-[200px] md:w-[240px] lg:w-[280px] inline-block cursor-pointer relative p-2">
       <img
         className="w-full h-full block"
-        src={`${basePath}${movie?.poster_path}`}
+        src={`${BASE_URL}${POSTER_SIZE.movie}${movie?.poster_path}`}
         alt={movie?.name}
       />
       <div className="absolute top-0 left-0 w-full h-full opacity-0 hover:bg-black/80 hover:opacity-100 ">

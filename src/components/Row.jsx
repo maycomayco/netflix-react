@@ -3,8 +3,6 @@ import React, { useEffect, useState } from "react";
 import Movie from "./Movie";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 
-const BASE_PATH = "https://image.tmdb.org/t/p/w500/";
-
 const Row = ({ title, fetchURL, rowID }) => {
   const [movies, setMovies] = useState([]);
 
@@ -39,7 +37,7 @@ const Row = ({ title, fetchURL, rowID }) => {
           className="w-full h-full overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide relative"
         >
           {movies.map((movie) => (
-            <Movie key={movie?.id} movie={movie} basePath={BASE_PATH} />
+            <Movie key={movie?.id} movie={movie} />
           ))}
         </div>
         <MdChevronRight

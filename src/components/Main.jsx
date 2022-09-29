@@ -1,9 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { BASE_URL, OVERVIEW_MAX_CHARS, POSTER_SIZE } from "../constants";
 import requests from "../Requests";
-
-const BASE_PATH = "https://image.tmdb.org/t/p/original/";
-const OVERVIEW_MAX_CHARS = 150;
+import { truncateString } from "../utils";
 
 const Main = () => {
   const [movies, setMovies] = useState([]);
@@ -16,19 +15,13 @@ const Main = () => {
     });
   }, []);
 
-  const truncateString = (str = "", num) => {
-    if (str?.length <= num) return str;
-
-    return str.slice(0, num) + "...";
-  };
-
   return (
     <div className="w-full h-[550px]">
       <div className="w-full h-full">
         <div className="absolute w-full h-[550px] bg-gradient-to-r from-black "></div>
         <img
           className="w-full h-full object-cover"
-          src={`${BASE_PATH}${randomMovie?.poster_path}`}
+          src={`${BASE_URL}${POSTER_SIZE.main}${randomMovie?.poster_path}`}
           alt={randomMovie?.original_title}
         />
         <div className="absolute w-full top-[20%] p-4">

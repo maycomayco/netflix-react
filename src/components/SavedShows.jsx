@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { UserAuth } from "../context/AuthContext";
 import { db } from "../firebase";
-import { updateDoc, doc, onSnapshot, getDoc } from "firebase/firestore";
+import { updateDoc, doc, getDoc } from "firebase/firestore";
 import { AiOutlineClose } from "react-icons/ai";
 
 const BASE_PATH = "https://image.tmdb.org/t/p/w500/";
@@ -9,14 +10,10 @@ const BASE_PATH = "https://image.tmdb.org/t/p/w500/";
 const SavedShows = () => {
   const [movies, setMovies] = useState([]);
   const { user } = UserAuth();
-  const userDoc = doc(db, "users", `${user?.email}`);
 
   useEffect(() => {
-    // this is with real time updates
-    /* onSnapshot(doc(db, "users", `${user?.email}`), (doc) => {
-      console.log("Current data: ", doc.data());
-      setMovies(doc.data()?.savedMovies);
-    }); */
+    const userDoc = doc(db, "users", `${user?.email}`);
+
     const getSavedMovies = async () => {
       const docSnap = await getDoc(userDoc);
       if (docSnap.exists()) {
@@ -26,7 +23,6 @@ const SavedShows = () => {
       }
     };
     getSavedMovies();
-    // }, [user?.email]);
   }, []);
 
   const handleDelete = async (id) => {
