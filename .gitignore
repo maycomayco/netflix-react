@@ -30,3 +30,14 @@ yarn-error.log*
 ### Firebase Patch ###
 .runtimeconfig.json
 .firebase/
+
+### VisualStudioCode ###
+.vscode/*      # Maybe .vscode/**/* instead - see comments
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+**/.history
